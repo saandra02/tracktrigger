@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            My Account
+        </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel = "stylesheet" href = "/css/stylesheet.css">
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+        <script>
+        //Sets minimum date for due date to today
+          function displayProfile(){ //Gets the tasks associated with the user and displays them.
+          $.ajax({
+          url: "/demo/profile",
+          headers: {"Authorization": sessionStorage.getItem('access_token')},
+          type: "GET",
+          success: function(data){
+            alert("Success");
+            console.log(data);
+            $("#email").html(data.email);
+            $("#name").html(data.name);
+           }
+        })
+        .fail(function(){
+           alert("Failure");
+        })
+      }
+      </script>
+    </head>
+
+    <body onload="displayProfile()">
+        <div class = "container-fluid">
+            <div id="mySidebar" class="sidebar" onmouseover = "toggleSidebar()" onmouseout = "toggleSidebar()">
+                <a href="profile.html"><span><i class="material-icons">account_box</i><span class="icon-text">My Account</span></span></a><br>
+                <a href="dashboard.html"><i class="material-icons">dashboard</i><span class="icon-text"></span>Dashboard</a><br>
+                <a href="#"><i class="material-icons">toc</i><span class="icon-text"></span>To Do</a><br>
+                <a href="#"><i class="material-icons">calendar_today</i><span class="icon-text"></span>Calendar</a><br>
+                <br><br><br><br><br><br><br><br><br><br><br><br>
+                <a href="#" onclick="signoutWin()"><i class="material-icons">exit_to_app</i><span class="icon-text"></span>Log Out</a>
+            </div>
+            <div id = "main">
+                <div class = "header"> My Account </div>
+                <br>
+                <div class = "row">
+                    <div class = "column66">
+                        <div class = "account_info">
+                            <h1>Hello <em>Adithya</em></h1>
+                            <table>
+                              <tr>
+                                <th> Email ID: </th>
+                                <td id="email"> </td>
+                              </tr>
+                              <tr>
+                                <th> Name: </th>
+                                <td id="name"> </td>
+                              </tr>
+                            </table>
+                            <br>
+                            <br><br><br><br><br><br>
+                        </div>
+                    </div>
+                    <div class = "column33">
+                    <div class = "card33">
+                        <img src="download.png" alt="Profile_Pic" style="width:100%">
+                        <h1>Adithya Warrier</h1>
+                        <p class="title">Noob</p>
+                        <p>Intelligence is temporary, Noobness is Permananet!</p>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+    </body>
+</html>

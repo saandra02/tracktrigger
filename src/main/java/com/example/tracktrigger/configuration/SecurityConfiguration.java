@@ -33,11 +33,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
+        		.antMatchers("/", "/js/**", "/css/**").permitAll()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers(HttpMethod.GET, "/demo/verify-registration").permitAll()
                 .antMatchers(HttpMethod.POST, "/demo/test").permitAll()
                 .antMatchers(HttpMethod.GET, "/demo/all").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/profile").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new AuthenticationFilter(authenticationManager()))

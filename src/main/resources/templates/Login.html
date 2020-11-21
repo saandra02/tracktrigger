@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+    integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel = "stylesheet" href = "/css/loginstylesheet.css">
+    <script>
+      $(document).ready(function(){
+        $("form").submit(function(event){
+          event.preventDefault();
+          var uname = $("#uname").val();
+          var psw = $("#psw").val();
+          data = {};
+          data.username = uname;
+          data.password = psw;
+          var jqxhr = $.post("/login", data, function(){
+            alert("Hallelujah");
+          });
+          jqxhr.done(function(){
+            sessionStorage.setItem('access_token', jqxhr.getResponseHeader('token'));
+            $(location).attr('href', '/profile');
+       });
+       //this section is executed when the server responds with error
+       jqxhr.fail(function(){
+            console.log("Failure!");
+       })
+       //this section is always executed
+       jqxhr.always(function(){
+           //here is how to access the response header
+           console.log("Finishing");
+       });
+        });
+      });
+    </script>
+    <title>Login In</title>
+</head>
+<body>
+    <div class="loginbox">
+        <form>
+        <div class="imgcontainer">
+          <img src="download.png" alt="Avatar" class="avatar">
+        </div>
+
+        <div class="container">
+              <label for="uname"><b>Username</b></label>
+              <input type="text" placeholder="Enter Username" id="uname"> </input>
+
+              <label for="psw"><b>Password</b></label>
+              <input type="password" placeholder="Enter Password" id="psw"> </input>
+
+              <button type="submit" onclick="Login()">Login</button>
+
+          </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button" class="newacc" onclick="openWin()">New Account</button>
+        </div>
+
+        </form>
+    </div>
+</body>
+</html>
