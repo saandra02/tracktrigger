@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <link rel = "stylesheet" href = "/css/stylesheet.css">
+        <link rel = "stylesheet" href = "/css/profilestylesheet.css">
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
@@ -27,7 +27,11 @@
             $("#email").html(data.email);
             $("#name").html(data.name);
             $("username").html(data.username);
-            $("prof").html(data.proffesion);
+            $("prof").html(data.profession);
+
+            //user profile card maybe wrong
+            //added the name and profession in profile card
+
            }
         })
         .fail(function(){
@@ -79,12 +83,10 @@
                     </div>
                     <div class = "column33">
                     <div class = "card33">
-                        <img src="download.png" alt="Profile_Pic" style="width:100%">
-                        <h1>Adithya Warrier</h1>
-                        <p class="title">Noob</p>
-                        <p>Intelligence is temporary, Noobness is 
-                          Permanent</p>
-                        <br>
+                        <img src="/images/login_user.png" alt="Profile_Pic" style="width:100%">
+                        <h1 id="name"></h1>
+                        <p id="prof"></p>
+                        <p class="quote"> "What do you want to get done? In what order of importance? Over what period of time? What is the time available? What is the best strategy for application of time to projects for the most effective results?"</p>
                     </div>
                     </div>
                 </div>
