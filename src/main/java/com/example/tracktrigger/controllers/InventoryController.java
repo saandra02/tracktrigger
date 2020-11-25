@@ -77,12 +77,47 @@ public class InventoryController {
     	}
     	return item_list;
     }
+    
+    @PostMapping(path="/update")
+    public ResponseEntity <String> updateItem (@RequestParam Long itemid, 
+    		@RequestParam String itemname, @RequestParam String itemdesc, @RequestParam Long category_id,
+    		@RequestParam int qty, @RequestParam double price, 
+    		@RequestParam(value = "imageFile", required = false) MultipartFile file) throws IOException {
+    	
+    	InventoryItem item = inventoryItemRepository.findByItemId(itemid);
+    	item.setItemName(itemname);
+    	item.setItemDesc(itemdesc);
+    	item.setCategoryId(category_id);
+    	item.setQty(qty);
+    	item.setPrice(price);
+    	if(file != null) {
+    		item.setPicByte(compressBytes(file.getBytes()));
+    	}
+    	inventoryItemRepository.save(item);
+        return new ResponseEntity <String>("Added Successfully", HttpStatus.OK);
+    }
    
     
     @DeleteMapping(path="/delete")
     public ResponseEntity<String> deleteItem(@RequestParam Long itemid){
     	inventoryItemRepository.deleteById(itemid);
     	return new ResponseEntity <String>("Deleted successfully!", HttpStatus.OK);
+    }
+    
+    @PostMapping(path="/qty/add")
+    public ResponseEntity <String> addQty(@RequestParam Long itemid){
+    	InventoryItem item = inventoryItemRepository.findByItemId(itemid);
+    	item.setQty(item.getQty()+1);
+    	inventoryItemRepository.save(item);
+    	return new ResponseEntity <String>("Quantity updated!", HttpStatus.OK);
+    }
+    
+    @PostMapping(path="/qty/sub")
+    public ResponseEntity <String> subQty(@RequestParam Long itemid){
+    	InventoryItem item = inventoryItemRepository.findByItemId(itemid);
+    	item.setQty(item.getQty()-1);
+    	inventoryItemRepository.save(item);
+    	return new ResponseEntity <String>("Quantity updated!", HttpStatus.OK);
     }
     
     

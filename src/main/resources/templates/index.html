@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="indexstylesheet.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/indexstylesheet.css">
     <title>Index</title>
     <script>
         function loginfxn() {
-             window.open("Login.html");
+             $(location).attr('href', '/userlogin');
         }
         function signupfxn() {
-             window.open("Signup.html");
+             $(location).attr('href', '/signup');
         }
     </script>
 </head>
@@ -24,7 +25,7 @@
           <br>
           <button id="Login" onclick="loginfxn()">Login</button>
         </div>
-        
+
         <div class="right">
           <h1>Sign Up</h1>
           <h2>Click the button below to make a new Account  </h2>

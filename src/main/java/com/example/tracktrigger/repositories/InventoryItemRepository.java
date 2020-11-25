@@ -9,4 +9,7 @@ public interface InventoryItemRepository extends CrudRepository <InventoryItem, 
 	@Query(value="SELECT * FROM inventory_item i WHERE i.user_id=?1", nativeQuery=true)
 	ArrayList <InventoryItem> findByUserId(Long user_id);
 	
+	@Query(value = "SELECT * FROM inventory_item i WHERE i.id=?1", nativeQuery = true)
+	InventoryItem findByItemId(Long id);
+	
 }
