@@ -60,6 +60,12 @@ public class CategoryController {
     	return categoryRepository.findByUserId(user_id);
     }
     
+    @GetMapping(path = "/readone")
+    public Category readOneCategory(@RequestParam Long id){
+    	Category cat = categoryRepository.findByCategoryId(id);
+    	return cat;
+    }
+    
     @PostMapping(path="/update")
     public ResponseEntity <String> updateCategory(@RequestParam Long id, 
     		@RequestParam String category_name, @RequestParam String category_desc){

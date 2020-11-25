@@ -10,7 +10,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <link rel = "stylesheet" href = "/css/profilestylesheet.css">
-
+        <script src="/js/script.js"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
@@ -22,12 +22,11 @@
           headers: {"Authorization": sessionStorage.getItem('access_token')},
           type: "GET",
           success: function(data){
-            alert("Success");
-            console.log(data);
             $("#email").html(data.email);
             $("#name").html(data.name);
-            $("username").html(data.username);
-            $("prof").html(data.profession);
+            $("#username").html(data.username);
+            $("#prof").html(data.profession);
+            $("#greeting_name").html("Hello ".concat(data.name));
 
             //user profile card maybe wrong
             //added the name and profession in profile card
@@ -44,8 +43,8 @@
     <body onload="displayProfile()">
         <div class = "container-fluid">
             <div id="mySidebar" class="sidebar" onmouseover = "toggleSidebar()" onmouseout = "toggleSidebar()">
-                <a href="profile.html"><span><i class="material-icons">account_box</i><span class="icon-text">My Account</span></span></a><br>
-                <a href="dashboard.html"><i class="material-icons">dashboard</i><span class="icon-text"></span>Dashboard</a><br>
+                <a href="/profile"><span><i class="material-icons">account_box</i><span class="icon-text">My Account</span></span></a><br>
+                <a href="/categories"><i class="material-icons">dashboard</i><span class="icon-text"></span>Dashboard</a><br>
                 <a href="#"><i class="material-icons">toc</i><span class="icon-text"></span>To Do</a><br>
                 <a href="#"><i class="material-icons">calendar_today</i><span class="icon-text"></span>Calendar</a><br>
                 <br><br><br><br><br><br><br><br><br><br><br><br>
@@ -57,7 +56,7 @@
                 <div class = "row">
                     <div class = "column66">
                         <div class = "account_info">
-                            <h1>Hello <em>Adithya</em></h1>
+                            <span id="greeting_name"></span>
                             <table>
                               <tr>
                                 <th> Email ID: </th>
@@ -75,7 +74,7 @@
                                   <th> Profession: </th>
                                   <td id="prof"></td>
                               </tr>
-                              
+
                             </table>
                             <br>
                             <br><br><br><br><br><br>
