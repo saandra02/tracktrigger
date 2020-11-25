@@ -72,19 +72,7 @@ public class UserController {
     
   }
  
-  @GetMapping(path="/verify-registration")
-  public ResponseEntity <String> CompleteVerify(@RequestParam String token){
-	  VerificationToken v_token = verificationTokenRepository.findByToken(token);
-	  if(token != null)
-      {
-          ApplicationUser user = applicationUserRepository.findByEmail(v_token.getUser().getEmail());
-          user.setEmail_Verified(true);
-          applicationUserRepository.save(user);
-      }
-	  
-	  return ResponseEntity.ok("Verified");
-  } 
-  
+
   @GetMapping(path="/all")
   public Iterable<ApplicationUser> getAllUsers() {
     return applicationUserRepository.findAll();
