@@ -1,5 +1,6 @@
 package com.example.tracktrigger.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,11 +12,14 @@ public class InventoryItem {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private long id;
   private long user_id;
+  private long category_id;
   private String item_name;
   private String item_desc;
-  private String cat;
   private int qty;
   private double price;
+  
+  @Column(name = "picByte", length = 1000, nullable = true)
+  private byte[] picByte;
   
   public Long getId() {
     return id;
@@ -41,11 +45,11 @@ public class InventoryItem {
   public void setItemDesc(String item_desc) {
 	    this.item_desc = item_desc;
 	  }
-  public String getCat() {
-	    return cat;
+  public Long getCategoryId() {
+	    return category_id;
 	  }
-  public void setCat(String cat) {
-	    this.cat = cat;
+  public void setCategoryId(Long category_id) {
+	    this.category_id = category_id;
 	  }
   public int getQty() {
 	    return qty;
@@ -59,6 +63,13 @@ public class InventoryItem {
   public void setPrice(double price) {
 	    this.price = price;
 	  }
+  
+  public byte[] getPicByte() {
+		return picByte;
+	}
+	public void setPicByte(byte[] picByte) {
+		this.picByte = picByte;
+	}
 
 
 	
