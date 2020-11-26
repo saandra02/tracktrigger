@@ -56,10 +56,10 @@
               <input id = "email" type="text" placeholder="Enter Email" name="email" required>
 
               <label for="username"><b>Username</b></label>
-              <input id = "username" type="text" placeholder="username" name="username" required>
+              <input id = "username" type="text" placeholder="username" pattern="^[a-zA-Z0-9]{4,10}$" name="username" required>
 
               <label for="psw"><b>Password</b></label>
-              <input id="password" type="password" placeholder="Enter Password" name="psw" required>
+              <input id="password" type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$" placeholder="Enter Password" name="psw" required>
 
               <label for="phno"><b>Phone Number</b></label>
               <input id="phone" type="text" placeholder="Phone Number" name="phno" required>
