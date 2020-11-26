@@ -64,6 +64,7 @@ public class ToDoController {
     public ResponseEntity <String> updateCategory(@RequestParam Long id, @RequestParam boolean task_status){
     	ToDoItem todo = toDoItemRepository.findByToDoItemId(id);
     	todo.setTaskStatus(task_status);
+    	toDoItemRepository.save(todo);
     	return new ResponseEntity <String>("Updated successfully", HttpStatus.OK);
     }
     

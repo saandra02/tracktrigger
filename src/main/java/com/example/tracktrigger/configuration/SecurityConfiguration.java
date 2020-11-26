@@ -46,6 +46,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/profile").permitAll()
                 .antMatchers("/categories").permitAll()
                 .antMatchers("/scheduleEmail").permitAll()
+                .antMatchers("/numberauth").permitAll()
+                .antMatchers("/dashboard").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new AuthenticationFilter(authenticationManager()))

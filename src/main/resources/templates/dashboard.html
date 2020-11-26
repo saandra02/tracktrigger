@@ -9,11 +9,12 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <link rel = "stylesheet" href = "stylesheet.css">
+        <link rel = "stylesheet" href = "/css/stylesheet.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <script src = "script.js" type = "text/javascript"></script>
+        <script src = "/js/script.js" type = "text/javascript"></script>
+        <script src = "/js/todoscript.js" type = "text/javascript"></script>
     </head>
-    <body>
+    <body onload="DisplayTasks()">
             <div id="mySidebar" class="sidebar" onmouseover = "toggleSidebar()" onmouseout = "toggleSidebar()">
                 <a href="profile.html"><span><i class="material-icons">account_box</i><span class="icon-text">My Account</span></span></a><br>
                 <a href="dashboard.html"><i class="material-icons">dashboard</i><span class="icon-text"></span>Dashboard</a><br>
@@ -22,7 +23,7 @@
                 <br><br><br><br><br><br><br><br><br><br><br><br>
                 <a href="index.html"><i class="material-icons">exit_to_app</i><span class="icon-text"></span>Log Out</a>
             </div>
-  
+
             <div id = "main">
                 <div class = "header"> Dashboard </div>
                 <br>
@@ -30,23 +31,14 @@
                     <div class = "column">
                     <div class = container-fluid>
                         <div class = "card">
-                        <div class = "header1"> To Do List 
+                        <div class = "header1"> To Do List
                             <br><br>
       <input type="text" id="myInput" placeholder="Enter a task">
-      <span onclick="newElement()" class="addBtn">Add</span>
+      <span onclick="AddTask()" class="addBtn">Add</span>
     </div>
     <ul id="myUL">
-      <li>Hi!</li>
-      <li>These</li>
-      <li>Are</li>
-      <li>Tasks</li>
-      <li>Add Your Own!</li>
-      <li>Try Completing This One!</li>
-      <li>Now Try Deleting This One!</li>
-      <li>You Can Also Clear All Tasks!</li>
     </ul>
-    <button type="button" id="clear-list" onclick="removeAll()">Clear Items</button>
-    <script src = "todoscript.js" type = "text/javascript"></script>
+
                         </div>
                         </div>
                     </div>

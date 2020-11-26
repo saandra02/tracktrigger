@@ -42,6 +42,16 @@ public class ViewController {
 		return "profile";
 	}
 	
+	@RequestMapping("/numberauth")
+	public String numberauth() {
+		return "number_auth";
+	}
+	
+	@RequestMapping("/dashboard")
+	public String dashboard() {
+		return "dashboard";
+	}
+	
 	@RequestMapping(path="/verify-registration", method= {RequestMethod.GET, RequestMethod.POST})
 	public String CompleteVerify(@RequestParam("token") String vtoken){
 		VerificationToken v_token = verificationTokenRepository.findByToken(vtoken);
