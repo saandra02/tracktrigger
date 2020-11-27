@@ -36,24 +36,19 @@
         });
       });
     </script>
-    <title>Login In</title>
+    <title>Login</title>
 </head>
 <body>
     <div class="loginbox">
         <form>
-        <div class="imgcontainer">
-          <img src="/images/login_user.png" alt="Avatar" class="avatar">
-        </div>
 
-        <div class="container">
-              <label for="uname"><b>Username</b></label>
-              <input type="text" placeholder="Enter Username" id="uname"> </input>
-
-              <label for="psw"><b>Password</b></label>
-              <input type="password" placeholder="Enter Password" id="psw"> </input>
-
-              <button type="submit">Login</button>
-
+          <div class="container">
+            <input type="text" placeholder="Enter Username" name="uname" required>
+    
+            <input type="password" placeholder="Enter Password" name="psw" required>
+      
+            <button type="submit" class="btn btn-primary btn-block btn-large" >Login</button>
+            
           </div>
 
         </form>

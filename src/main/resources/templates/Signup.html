@@ -43,35 +43,28 @@
     <title>Sign Up</title>
 </head>
 <body>
-    <div class="loginbox">
-        <form style="border:1px solid #ccc">
+    <div class="login">
+        <form >
             <div class="container">
               <h1>Sign Up</h1>
-              <hr>
 
-              <label for="name"><b>Name</b></label>
               <input id = "name" type="text" placeholder="Your Name" name="name" required>
 
-              <label for="email"><b>Email</b></label>
               <input id = "email" type="text" placeholder="Enter Email" name="email" required>
 
-              <label for="username"><b>Username</b></label>
-              <input id = "username" type="text" placeholder="username" pattern="^[a-zA-Z0-9]{4,10}$" name="username" required>
+              <input id = "username" type="text" placeholder="username" pattern="^[a-zA-Z0-9]{4,10}$" title="No special characters and length 4-10" name="username" required>
 
-              <label for="psw"><b>Password</b></label>
-              <input id="password" type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$" placeholder="Enter Password" name="psw" required>
-
-              <label for="phno"><b>Phone Number</b></label>
+              <input id="password" type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$" title="Atleast one uppercase,lowercase,number,special character and length 8-12" placeholder="Enter Password" name="psw" required>
+          
               <input id="phone" type="text" placeholder="Phone Number" name="phno" required>
 
-              <label for="profession"><b>Profession<br></b></label>
               <select name="profession" id="profession">
                 <option value="Homemaker">Homemaker</option>
                 <option value="Student">Student</option>
                 <option value="Professional">Professional</option>
               </select>
               <div class="clearfix">
-                <button type="submit" class="signupbtn">Sign Up</button>
+                <button type="submit" class="btn btn-primary btn-block btn-large">Sign Up</button>
               </div>
             </div>
           </form>
