@@ -26,7 +26,7 @@
             alert(data);
           });
           jqxhr.done(function(){
-            $(location).attr('href', '/userlogin');
+            $(location).attr('href', '/numberverification');
        });
        //this section is executed when the server responds with error
        jqxhr.fail(function(){
@@ -55,7 +55,7 @@
               <input id = "username" type="text" placeholder="username" pattern="^[a-zA-Z0-9]{4,10}$" title="No special characters and length 4-10" name="username" required>
 
               <input id="password" type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$" title="Atleast one uppercase,lowercase,number,special character and length 8-12" placeholder="Enter Password" name="psw" required>
-          
+
               <input id="phone" type="text" placeholder="Phone Number" name="phno" required>
 
               <select name="profession" id="profession">

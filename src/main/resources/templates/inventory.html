@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>
+My Inventory
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1", charset= "utf-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=5pG2AFapd4oiI2EeWnB3zo0z_8xIDWsly-78jXx4ZcxTRxMaedy1D5s66xHPLXrKVSRsy0vl5ITWb9OiWrk09F7K96xmJaiFwYVdbbWTLM5bBNfNhbGNwjerBOEYz0LSNZJY80XqagvAtgBH-Ixts9TcdwxYEuTc9KsirraZEuJ1v8V-Bs9CY3Wykax9dejYirGLrtu_GD46ZdF-vMBnCLwOe4oDeOx3p9sl3VMoXM17jck313CZgCNpnh0Dte2aYiwLTzAVxp8afjn8K5TDmiCRcT7u9i87l5Bb7B-Kw3rq3kuC_ybMYL4xaTLbXCqOXBElMpKMKLiBcjZRSpf1-ssIe1Y9_ZrpDW4CKRnLGISiRq5EMdNEwPeSHWlbQrk-FNdCxmYoI5z65EAaSUslezuee-k4m2o5TEPhcAuTdM9PLM6KHJ4hp2Du_uoszdflN26UxB_BGHAceK9OkQAtqTPxqA6dHquzQrJx0LQv_tbxQ6Lv6c2820ZmxAqJ9KoImJaCVgn66DvAgvctteJTA-eYW5rrkWc2RrFPTnmM6qL1tJwO38DtLZ2ybOCPUSXF-TCWEa2DWxFvVC_QStv_DkrH61jUlIL4la-Ejui1NQA7i0vcmY-kUO9POm9MnebEGq7cMKwSAfoUOnFntJ-jZVBBzw6_j00qBeZR-jKuSh2t1vFXv4N2-seCmufLrarQ58bRUG4jCoKIEaKKqb95Wj9rR9TIV5iIGsNVCurDwM-Wv08O796MebsYMuy_ROEy52llD86He7TB9tDaP-3hxG1lgQMWgkmvRQTO396r1Y-WVYxCLHjZIvQCxaUsOOAy_wiXU3VZU16oGyqZHHY4EvhQ8pbzAlyDIjOei6L0BS9MGbDSu37y723lHOozq3xfaLfDL2JzjRx3Mq0d9jThe--_TyDdG0JPl8oRlAozRjfe6JuW7XP1SmtSTT0-agW_Lf8YrXN5Pcuj8CtD6ioth2q-hcduDtjqDrQvEih8u3ks5e0ikRE_Flr32JV6-I6VCu_YDh6vVksaVBi5bRRHvA5yHBpJrYkLnnV05Ac8mXdAi9dHTndh8XMuDu1Gop1StZnJwb3cEVfKc2tUyIu_FnxmUJzSVpPdpUxBYvifFRuM7wnZPZxseiFhnsZBEEljJZVLOhS6PkzB6mLftD04fBckBkyEDpos0sfFF4edZ3-GSeFIarktX7R4kXeSSf9QU3OwbHGg49PVOY5g4dm9gA" nonce="f7e61d9113b1a7b23c0893e6aef4468a" charset="UTF-8"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel = "stylesheet" href = "/css/stylesheet.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src = "/js/script.js" type = "text/javascript"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"> </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+
+
+<script>
+$(document).ready(function()
+{
+DisplayItems();
+AddCategories();
+$('#addModal').on('hide.bs.modal', function () {
+RevertChanges();
+})
+});
+
+function GetData()
+{
+var data = {};
+data.itemname = $("#item").val();
+data.itemdesc = $("#desc").val();
+data.category_id = $("#category").val();
+data.qty = $("#qty").val();
+data.price = $("#price").val();
+return data;
+}
+
+
+function AddCategories(){
+$.ajax({
+url: "/demo/category/read",
+headers: {"Authorization": sessionStorage.getItem('access_token')},
+type: "GET",
+success: function(data){
+for (var i=0; i<data.length; i++){
+var id = data[i].id;
+var name= data[i].categoryName;
+
+//$("#filterCategories").append('<option value =' + id + '>' + name + '</option>');
+$("#category").append('<option value =' + id + '>' + name + '</option>');
+}
+}
+})
+.fail (function(){
+    alert("Failed to load categories");
+})
+}
+
+function DisplayItems()
+{
+$("#inventory").empty();
+//var q = $("#search_text").val();
+$.ajax({
+url: "/demo/inventory/read",
+headers: {"Authorization": sessionStorage.getItem('access_token')},
+type: "GET",
+success: function(data){
+for(var i = 0; i < data.length; i++)
+{
+//if(q == "" || data[i] == q)
+var col = $( '<div class="col-sm-4" </div>' ).appendTo('#inventory');
+var item = $('<p class="task"> </p>').appendTo(col);
+item.css("background-color", "blue");
+item.append('<span onclick="ViewItem(\'' + data[i].itemid + '\')"> <span class = "clickable" data-toggle="modal" data-target="#addModal"> <b>' + data[i].itemname + '</b></span> </span>');
+item.append('<br> Category ' + data[i].categoryId);
+item.append('<br> Quantity ' + data[i].qty);
+item.append('<button onclick="AddQty(\'' + data[i].itemid + '\')" style="float:right" class="fas fa-plus"></button>');
+item.append('<button onclick="SubQty(\'' + data[i].itemid + '\')" style="float:right" class="fas fa-minus"></button>');
+item.append('<br> Price ' + data[i].price);
+item.append('<br> <button onclick="DelItems(\'' + data[i].itemid + '\')" style="float:right" class="fas fa-trash-alt task-button"></button>');
+item.append('<span data-toggle="modal" data-target="#addModal"><button onclick="EditItems(\'' + data[i].itemid + '\')" style="float:right" class="fas fa-edit task-button edit-button"></button></span>');
+}
+}
+})
+.fail(function(){
+alert("Display failed!");
+})
+}
+
+function ViewItem(id){
+      //Make changes
+      $("#addModalhead").html("Item Details");
+      $(".nfv").css("display", "none");
+      GetItem(id);
+      $( "#item" ).prop( "disabled", true );
+      $( "#desc" ).prop( "disabled", true );
+      $("#category").prop("disabled", true);
+      $("#qty").prop("disabled", true);
+      $("#price").prop("disabled", true);
+    }
+
+function GetItem(id){
+    data = {};
+    data.itemid = id;
+      $.ajax({
+        url: "/demo/inventory/readone",
+        headers: {"Authorization": sessionStorage.getItem('access_token')},
+        type: "GET",
+        datatype: "json",
+        data: data,
+        success: function(data){
+          $("#item").val(data.itemname);
+          $("#desc").val(data.itemdesc);
+          $("#category").val(data.categoryId);
+          $("#qty").val(data.qty);
+          $("#price").val(data.price);
+        }
+        })
+        .fail(function(){
+          return NULL;
+        })
+}
+
+function AddQty(id)
+{
+data = {};
+data.itemid = id;
+$.ajax({
+url: "/demo/inventory/qty/add",
+headers: {"Authorization": sessionStorage.getItem('access_token')},
+type: "POST",
+datatype: "json",
+data: data,
+success: function(data){
+alert("Updated successfully")
+DisplayItems();
+}
+})
+.fail(function(){
+alert("Updating failed");
+})
+/* var newval = parseInt(data.qty) + 1;
+    data.qty = newval; */
+}
+
+function SubQty(id)
+{
+data = {};
+data.itemid = id;
+$.ajax({
+url: "/demo/inventory/qty/sub",
+headers: {"Authorization": sessionStorage.getItem('access_token')},
+type: "POST",
+datatype: "json",
+data: data,
+success: function(data){
+alert("Updated successfully")
+DisplayItems();
+}
+})
+.fail(function(){
+alert("Updating failed");
+})
+/* var newval = parseInt(data.qty) - 1;
+    data.qty = newval; */
+}
+
+function AddItem()
+{
+var data = GetData();
+console.log(data);
+$.ajax({
+url: "/demo/inventory/create",
+headers: {"Authorization": sessionStorage.getItem('access_token')},
+type: "POST",
+datatype: "json",
+data: data,
+success: function(data){
+alert("Added successfully")
+DisplayItems();
+}
+})
+.fail(function(){
+alert("Addition failed");
+})
+}
+
+function EditItems(id){
+var data = GetData();
+data.itemid = id;
+$.ajax({
+url: "/demo/inventory/update",
+headers: {"Authorization": sessionStorage.getItem('access_token')},
+type: "POST",
+data: data,
+success: function(data){
+alert("Edited successfully");
+DisplayItems();
+}
+})
+.fail(function(){
+alert("Editing error");
+})
+}
+
+function DelItems(id){
+var confirm = window.confirm("Are you sure you want to delete this item?");
+if (confirm){
+//Passing ID
+data = {};
+data.itemid = id;
+//Sending the request
+$.ajax({
+url: "/demo/inventory/delete",
+headers: {"Authorization": sessionStorage.getItem('access_token')},
+type: "DELETE",
+data : data,
+success: function(data){
+alert("Deleted successfully");
+DisplayCategories();
+}
+})
+.fail(function(){
+alert("Deletion Error");
+})
+}
+}
+
+
+    function RevertChanges(){
+      $("#addModalhead").html("Add Item");
+      $("#submit").attr("onclick", "AddItem()");
+      $("#submit").html("Add Item");
+      $(".nfv").css("display", "block");
+      $("#item").val("");
+      $("#desc").val("");
+      $("#category").val("");
+      $("#qty").val("");
+      $("#price").val("");
+      $( "#item" ).prop( "disabled", false );
+      $( "#desc" ).prop( "disabled", false );
+      $("#qty").prop("disabled", false);
+      $("#price").prop("disabled", false);
+    }
+    function ShowSearchBar(){
+      if($("#search_bar").css("display")=="none"){
+        $("#search_bar").css("display", "inline");
+        $("#filter_span").css("display", "none");
+        $("#add_span").css("display", "none");
+      } else {
+        $("#search_bar").css("display", "none");
+        $("#filter_span").css("display", "inline");
+        $("#add_span").css("display", "inline");
+        DisplayTasks();
+      }
+    }
+/*   function Search(data){
+      if ($("#search_text").val()){
+        data.itemname__contains = $("#search_text").val();
+      } else{
+        data.itemname__contains= "";
+      }
+      console.log(data);
+      DisplayTasks(data=data); */
+
+</script>
+</script>
+</head>
+<body>
+<div id="mySidebar" class="sidebar" onmouseover = "toggleSidebar()" onmouseout = "toggleSidebar()">
+<a href="profile.html"><span><i class="material-icons">account_box</i><span class="icon-text">My Account</span></span></a><br>
+<a href="dashboard.html"><i class="material-icons">dashboard</i><span class="icon-text"></span>Dashboard</a><br>
+<a href="todo.html"><i class="material-icons">toc</i><span class="icon-text"></span>To Do</a><br>
+<a href="calendar.html"><i class="material-icons">calendar_today</i><span class="icon-text"></span>Calendar</a><br>
+<br><br><br><br><br><br><br><br><br>
+<a href="index.html"><i class="material-icons">exit_to_app</i><span class="icon-text"></span>Log Out</a>
+</div>
+
+<div id = "main">
+<div class = "header" id = "header"> My Inventory </div>
+<br>
+<div class="container-fluid">
+  <!-- The Modal -->
+<div class="modal" id="addModal">
+<div class="modal-dialog">
+<div class="modal-content">
+
+<!-- Modal Header -->
+<div id="addModalHead" class="modal-header add">
+Add New Task
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+<!-- Modal body -->
+<div class="modal-body">
+<table id="addItem">
+<tr>
+<th> <label for="item"> Item  </label> </th>
+<td> <input name="item" id="item" type="text" maxlength="200"> </input> </td>
+</tr>
+<tr>
+<th> <label for="desc"> Description </label> </th>
+<td> <textarea name="desc" id="desc"> </textarea> </td>
+</tr>
+<th> <label for="category"> Category </label> </th>
+<td> <select name = "category" id = "category">
+<option value = ""> </option>
+</select></td>
+</tr>
+<tr>
+<th><label for="qty"> Quantity </label></th>
+<td> <input name = "qty" id = "qty"></td>
+</tr>
+<tr>
+<th> <label for="price"> Price </label> </th>
+<td> <input name="price" id="price"></td>
+</tr>
+<tr>
+</table>
+<div class="modal-footer">
+<button type="button" class="btn btn-danger nfv" onclick="RevertChanges()" data-dismiss="modal">Cancel</button>
+<button type="button" class="btn btn-primary nfv" data-dismiss="modal" id="submit" onclick="AddItem()">Add Item</button>
+</div>
+</div>
+    </div>
+    </div>
+  </div>
+<div class="row min-vh-100 flex-column flex-md-row">
+<main class="col bg-faded py-3 flex-grow-1">
+<div class="card">
+<div class="card-header">
+My Inventory
+<span id="search_bar" style= "display:none; float:right">
+<input id="search_text" onkeyup="" type="text" style="border-radius:15px; font-size:17px; padding-left:2px" placeholder="Enter Item Name...">
+</span>
+<span id="search_span" style= "float:right" data-toggle="tooltip" title="Search Tasks">
+<button class="add-button" onclick="ShowSearchBar()">
+<i class="fas fa-search"></i>
+</button>
+</span>
+<span  id="filter_span" style= "float:right" data-toggle="tooltip" title="Filter Tasks">
+<button class="add-button" data-toggle="modal" data-target="#filterModal">
+<i class="fas fa-filter"></i>
+</button>
+</span>
+<span id="add_span" style= "float:right" data-toggle="tooltip" title="Add a New Item">
+<button class="add-button" data-toggle="modal" data-target="#addModal">
+<i class="fas fa-plus"></i>
+</button>
+</span>
+</div>
+<div class="card-body">
+<div class="row" id="inventory">
+</div>
+</div>
+<div class="card-footer">
+<button type ="button" id="prev" style="display:none" onlick="" class="btn btn-primary"> Prev </button>
+<button type ="button" id="next" style="float:right;display:none" onclick="" class="btn btn-primary"> Next </button>
+</div>
+</body>
+</html>

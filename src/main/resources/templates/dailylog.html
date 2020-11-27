@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>
+Daily Log
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1", charset= "utf-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel = "stylesheet" href = "/css/stylesheet.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src = "/js/script.js" type = "text/javascript"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"> </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+</head>
+
+<script>
+$(document).ready(function(){
+DisplayLogs();
+$('#myModal').on('hide.bs.modal', function () {
+RevertChanges();
+})
+});
+
+function DisplayLogs(){
+$("#LogTable").empty();
+$.ajax({
+url: "/demo/log/read",
+headers: {"Authorization": sessionStorage.getItem('access_token')},
+type: "GET",
+success: function(data){
+console.log(data);
+for(var i=0; i<data.length; i++){
+var row = $('<tr style="border-bottom: 1px solid black"></tr>').appendTo('#LogTable');
+row.append('<td>'+ data[i].entryDate + '</td>');
+row.append('<td>'+ data[i].entryContent + '</td>');
+row.append('<td> <i class="fas fa-minus-circle"  onclick="DelLog(\'' + data[i].id + '\')"></i> </td>');
+}
+}
+})
+.fail(function(){
+alert("Loading logs failed.");
+})
+}
+
+
+/*
+function GetLog(label_id){
+    data = {};
+    data.id = label_id;
+    console.log(label_id);
+$.ajax({
+url: "/demo/category/readone",
+headers: {"Authorization": sessionStorage.getItem('access_token')},
+type: "GET",
+datatype: "json",
+data: data,
+success: function(data){
+$("#name").val(data.categoryName);            //check with saandra
+$("#entry_content").val(data.categoryDesc);
+}
+})
+.fail(function(){
+return NULL;
+})
+}*/
+
+
+function AddLog(){
+var data = {};
+data.entry_content = $("#entry_content").val();
+$.ajax({
+url: "/demo/log/create",
+headers: {"Authorization": sessionStorage.getItem('access_token')},
+type: "POST",
+datatype: "json",
+data: data,
+success: function(data){
+DisplayLogs();
+}
+})
+.fail(function(){
+alert("Entry was not added");
+})
+}
+
+
+function DelLog(log_id){
+var confirm = window.confirm("Are you sure you want to delete the Log?");
+if (confirm){
+//Passing ID
+data = {};
+data.id = log_id;
+//Sending the request
+$.ajax({
+url: "/demo/log/delete",
+headers: {"Authorization": sessionStorage.getItem('access_token')},
+type: "DELETE",
+data : data,
+success: function(data){
+alert("Deleted successfully");
+DisplayLogs();
+}
+})
+.fail(function(){
+alert("Deletion Error");
+})
+}
+}
+
+
+function RevertChanges(){
+$("#addCategoryHead").html("Add Entry");
+$("#submit").attr("onclick", "AddLog()");
+$("#submit").html("Add Entry");
+$("#entry_content").val("");
+}
+
+
+</script>
+
+
+
+<body>
+<div id="mySidebar" class="sidebar" onmouseover = "toggleSidebar()" onmouseout = "toggleSidebar()">
+<a href="profile.html"><span><i class="material-icons">account_box</i><span class="icon-text">My Account</span></span></a><br>
+<a href="dashboard.html"><i class="material-icons">dashboard</i><span class="icon-text"></span>Dashboard</a><br>
+<a href="todo.html"><i class="material-icons">toc</i><span class="icon-text"></span>To Do</a><br>
+<a href="calendar.html"><i class="material-icons">calendar_today</i><span class="icon-text"></span>Calendar</a><br>
+<br><br><br><br><br><br><br><br><br>
+<a href="index.html"><i class="material-icons">exit_to_app</i><span class="icon-text"></span>Log Out</a>
+</div>
+
+<div id = "main">
+<div class = "header" id = "header"> Manage Logs </div>
+<br>
+<div class="container-fluid">
+  <!-- The Modal -->
+<div class="modal" id="myModal">
+<div class="modal-dialog">
+<div class="modal-content">
+
+<!-- Modal Header -->
+<div id="addCategoryHead" class="modal-header add">
+Add Logs
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+
+<!-- Modal body -->
+<div class="modal-body">
+          <table>
+              <th> <label for="entry_content"> Log:  </label> </th>
+              <td> <textarea name="entry_content" id="entry_content"> </textarea> </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button id="submit" type="button" class="btn btn-primary" data-dismiss="modal" onclick="AddLog()">Add Log</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+    <div class="row min-vh-100 flex-column flex-md-row">
+        <main class="col bg-faded py-3 flex-grow-1">
+          <div class="card">
+            <div class="card-header">
+              My Logs
+              <span style= "float:right" data-toggle="tooltip" title="Add A New Log">
+                <button class="add-button" data-toggle="modal" data-target="#myModal">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </span>
+            </div>
+            <div class="card-body">
+              <table style="width:100%; text-align:center" id="LogTable">
+                <tr>
+                  <th> Date </th>
+                  <th> Log </th>
+                  <th> Delete </th>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </main>
+    </div>
+    </body>
+</html>
+```````````````

@@ -42,9 +42,9 @@ public class ViewController {
 		return "profile";
 	}
 	
-	@RequestMapping("/numberauth")
-	public String numberauth() {
-		return "number_auth";
+	@RequestMapping("/numberverification")
+	public String numberverification() {
+		return "numberverification";
 	}
 	
 	@RequestMapping("/dashboard")
@@ -71,6 +71,15 @@ public class ViewController {
 	@RequestMapping(path = "/categories")
 	public String categories() {
 		return "categories";
+	}
+	
+	@RequestMapping(path = "/inventory")
+	public String inventory() {
+		return "inventory";
+	}
+	@RequestMapping(path = "/log")
+	public String log() {
+		return "dailylog";
 	}
 	  
 }

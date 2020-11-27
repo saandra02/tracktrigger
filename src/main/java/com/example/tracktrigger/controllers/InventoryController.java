@@ -78,6 +78,12 @@ public class InventoryController {
     	return item_list;
     }
     
+    @GetMapping(path = "/readone")
+    public InventoryItem readTask(Authentication authentication, @RequestParam Long itemid) throws IOException{
+    	InventoryItem item = inventoryItemRepository.findByItemId(itemid);
+    	return item;
+    }
+    
     @PostMapping(path="/update")
     public ResponseEntity <String> updateItem (@RequestParam Long itemid, 
     		@RequestParam String itemname, @RequestParam String itemdesc, @RequestParam Long category_id,

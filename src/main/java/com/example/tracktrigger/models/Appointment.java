@@ -1,8 +1,6 @@
 package com.example.tracktrigger.models;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +17,7 @@ public class Appointment {
   private String appt_reqs;
   private String appt_location;
   private LocalDateTime dateTime;
-  private ZoneId timeZone;
+  private String appt_trigger_name;
   
   public Long getId() {
     return id;
@@ -42,11 +40,17 @@ public class Appointment {
   public String getApptDesc() {
 	  return this.appt_desc;
   }
-  public void setApptReqs(String appt_reqs) {
-	  this.appt_reqs = appt_reqs;
+  public void setApptDesc(String appt_desc) {
+	  this.appt_desc = appt_desc;
   }
   public String getApptReqs() {
 	  return this.appt_reqs;
+  }
+  public void setApptReqs(String appt_reqs) {
+	  this.appt_reqs = appt_reqs;
+  }
+  public String getAppLoc() {
+	  return this.appt_location;
   }
   public void setApptLoc(String appt_location) {
 	  this.appt_location = appt_location;
@@ -57,11 +61,11 @@ public class Appointment {
   public void setDateTime(LocalDateTime dateTime) {
 	  this.dateTime = dateTime;
   }
-  public ZoneId getTimeZone() {
-	  return this.timeZone;
+  public String getApptTriggerName() {
+	  return this.appt_trigger_name;
   }
-  public void setTimeZone(ZoneId timeZone) {
-	  this.timeZone = timeZone;
+  public void setApptTriggerName(String appt_trigger_name) {
+	  this.appt_trigger_name = appt_trigger_name;
   }
 
 
